@@ -8,8 +8,8 @@ const app = express();
 app.use(express.static('public'));
 
 async function startServer(port = config.PORT) {
-  await new Promise((resolve, reject) =>
-    server = app.listen(port, resolve).on('error', reject)
+  return await new Promise((resolve, reject) =>
+    app.listen(port, resolve).on('error', reject)
   );
 }
 
