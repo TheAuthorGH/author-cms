@@ -2,14 +2,26 @@ const config = require('./config');
 
 const chalk = require('chalk');
 const express = require('express');
+const mongoose = require('mongoose');
+
+mongoose.Promise = global.Promise;
+mongoose.set('useNewUrlParser', true);
+mongoose.set('useFindAndModify', false);
+mongoose.set('useCreateIndex', true);
 
 const app = express();
 
 app.use(express.static('public'));
 
-async function startServer(port = config.PORT) {
+async function startServer(port = config.PORT, dbUrl = config.DATABASE_URL) {
+  await mongoose.connect(`mongodb://${dbUrl}`);
   return await new Promise((resolve, reject) =>
-    app.listen(port, resolve).on('error', reject)
+    app
+      .listen(port, resolve)
+      .on('error', err => {
+        mongoose.disconnect();
+        reject(err);
+      })
   );
 }
 
