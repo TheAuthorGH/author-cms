@@ -4,14 +4,18 @@
   "description": "",
   "main": "server.js",
   "scripts": {
-    "test": "mocha --exit"
+    "test": "mocha --exit",
+    "dev": "webpack --mode=development --watch",
+    "prod": "webpack --mode=production"
   },
   "author": "Luis Lau",
   "license": "GPL-3.0",
   "devDependencies": {
     "chai": "^4.2.0",
     "chai-http": "^4.2.1",
-    "mocha": "^6.0.2"
+    "mocha": "^6.0.2",
+    "webpack": "^4.29.6",
+    "webpack-cli": "^3.3.0"
   },
   "dependencies": {
     "bcrypt": "^3.0.5",
