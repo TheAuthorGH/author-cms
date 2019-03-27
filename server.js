@@ -28,6 +28,7 @@ async function startServer(port = config.PORT, dbUrl = config.DATABASE_URL) {
 async function main() {
   try {
     await startServer();
+    await require('./setup')();
     console.log(chalk.green(`${chalk.blue('AuthorCMS')} is listening on port ${config.PORT}.`));
   } catch(err) {
     console.log(chalk.red(`An error ocurred while starting AuthorCMS server.`));
