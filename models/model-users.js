@@ -5,7 +5,8 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 
 const userSchema = new mongoose.Schema({
-  email: {type: String, required: true, unique: true},
+  username: {type: String, required: true, unique: true},
+  email: {type: String},
   password: {type: String, required: true}
 });
 
@@ -37,6 +38,7 @@ userSchema.methods.createJwt = function() {
 userSchema.methods.serialize = function() {
   return {
     id: this._id,
+    username: this.username,
     email: this.email
   };
 };

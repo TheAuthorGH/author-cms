@@ -7,9 +7,9 @@ const {Strategy: LocalStrategy} = require('passport-local');
 const expressJwt = require('express-jwt');
 
 passport.use(new LocalStrategy(
-  {usernameField: 'email'},
-  async (email, password, callback) => {
-    const user = await UserModel.findOne({email});
+  {usernameField: 'username'},
+  async (username, password, callback) => {
+    const user = await UserModel.findOne({username});
     if(!user) {
       return callback(null, false, {});
     }
@@ -24,7 +24,6 @@ module.exports = {
   localAuth: passport.authenticate('local', {session: false}),
   requireAuth: expressJwt({
     secret: config.JWT_SECRET,
-    userProperty: 'auth',
     getToken(req) {
       const token = req.headers.authorization;
       if(token && token.split(' ')[0] === 'Bearer') {
