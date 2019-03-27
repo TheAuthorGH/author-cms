@@ -16,6 +16,8 @@
   "dependencies": {
     "chalk": "^2.4.2",
     "express": "^4.16.4",
-    "mongoose": "^5.4.19"
+    "mongoose": "^5.4.19",
+    "passport": "^0.4.0",
+    "passport-jwt": "^4.0.0"
   }
 }

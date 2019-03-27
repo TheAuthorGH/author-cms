@@ -11,7 +11,7 @@ mongoose.set('useCreateIndex', true);
 
 const app = express();
 
-app.use(express.static('public'));
+require('./api/routes')(app);
 
 async function startServer(port = config.PORT, dbUrl = config.DATABASE_URL) {
   await mongoose.connect(`mongodb://${dbUrl}`);
