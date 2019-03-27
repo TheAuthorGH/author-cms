@@ -1,10 +1,11 @@
 const UserModel = require('../models/model-users');
 
 const jsonParser = require('body-parser').json();
+const {requireAuth} = require('./auth');
 
 const router = require('express').Router();
 
-router.post('/', [jsonParser], async (req, res) => {
+router.post('/', [requireAuth, jsonParser], async (req, res) => {
   const {email, password} = req.body;
   if(!email || !password) {
     res.status(400).send('Missing required fields.');
