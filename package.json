@@ -5,7 +5,7 @@
   "main": "server.js",
   "scripts": {
     "test": "mocha --exit",
-    "dev": "webpack --mode=development --watch",
+    "dev": "concurrently \"nodemon\" \"webpack --mode=development --watch\"",
     "prod": "webpack --mode=production"
   },
   "author": "Luis Lau",
@@ -13,7 +13,9 @@
   "devDependencies": {
     "chai": "^4.2.0",
     "chai-http": "^4.2.1",
+    "concurrently": "^4.1.0",
     "mocha": "^6.0.2",
+    "nodemon": "^1.18.10",
     "webpack": "^4.29.6",
     "webpack-cli": "^3.3.0"
   },
