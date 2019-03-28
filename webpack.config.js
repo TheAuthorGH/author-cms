@@ -7,9 +7,21 @@ module.exports = {
     path: path.resolve(__dirname, 'public')
   },
   resolve: {
-    extensions: ['.js'],
+    extensions: ['.js', '.scss'],
     alias: {
       '@': path.resolve(__dirname, 'public')
     }
+  },
+  module: {
+    rules: [
+      {
+        test: /\.scss$/,
+        use: [
+          'style-loader',
+          'css-loader',
+          'sass-loader',
+        ]
+      }
+    ]
   }
 };
