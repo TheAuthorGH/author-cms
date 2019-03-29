@@ -1,10 +1,14 @@
 import './styles/reset';
 
-import Vue from 'vue';
+import axios from 'axios';
+window.axios = axios;
 
+import Vue from 'vue';
+import store from './store';
 import App from './App';
 
 new Vue({
   el: '#app',
-  render: h => h(App)
+  render: h => h(App),
+  store
 });
