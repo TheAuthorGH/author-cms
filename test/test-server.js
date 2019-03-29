@@ -4,7 +4,7 @@ chai.use(require('chai-http'));
 
 const {app, startServer} = require('../server');
 
-describe('Server', async function() {
+describe('Server', function() {
   it('Should perform a clean start', async function() {
     await startServer();
   });
