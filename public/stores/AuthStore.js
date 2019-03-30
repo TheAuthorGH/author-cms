@@ -11,10 +11,18 @@ export default {
       cookies.set('auth-token', authToken);
     }
   },
+  getters: {
+    isUserAuthenticated(state) {
+      return Boolean(state.authToken);
+    }
+  },
   actions: {
-    async attemptLogin(context, data) {
-      const res = await axios.post('/api/auth', data)
+    async login(context, data) {
+      const res = await axios.post('/api/auth', data);
       context.commit('setAuthToken', res.data);
+    },
+    async logout(context) {
+      context.commit('setAuthToken', null);
     }
   },
 };

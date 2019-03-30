@@ -1,4 +1,5 @@
 import './styles/reset';
+import './styles/base';
 
 import axios from 'axios';
 window.axios = axios;

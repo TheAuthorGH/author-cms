@@ -1,0 +1,33 @@
+html {
+  font-family: 'Helvetica Neue', Helvetica, sans-serif, Ubuntu;
+}
+
+h1 {
+  font-size: 2rem;
+}
+
+h2 {
+  font-size: 1.5rem;
+}
+
+form {
+  input, button {
+    padding: 0.5rem;
+    border-radius: 2px;
+  }
+  button {
+    background-color: #111;
+    color: white;
+    cursor: pointer;
+    &:hover {
+      background-color: #333;
+    }
+    &[disabled] {
+      background-color: #333;
+      cursor: not-allowed;
+    }
+  }
+  input {
+    border: 2px #CCC solid;
+  }
+}
