@@ -1,11 +1,11 @@
 <template>
   <div id="app">
     <section role="region">
-      
     </section>
-    <section id="centerpiece" role="region">
+    <section class="centerpiece" role="region">
       <header>
         <h1>AuthorCMS</h1>
+        <AuthNav/>
       </header>
       <main role="main">
         <router-view/>
@@ -13,6 +13,16 @@
     </section>
   </div>
 </template>
+
+<script>
+import AuthNav from './components/AuthNav';
+
+export default {
+  components: {
+    AuthNav
+  }
+};
+</script>
 
 <style lang="scss">
 body {
@@ -27,7 +37,7 @@ body {
     display: flex;
     flex-direction: column;
   }
-  #centerpiece {
+  .centerpiece {
     flex: 1;
     padding: 1rem;
   }

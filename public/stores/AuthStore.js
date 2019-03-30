@@ -23,6 +23,11 @@ export default {
     },
     async logout(context) {
       context.commit('setAuthToken', null);
+    },
+    async refresh(context) {
+      const res = await axios.post('/api/auth/refresh', null, {
+        headers: {Authorization: `Bearer ${context.state.authToken}`}
+      });
     }
   },
 };
