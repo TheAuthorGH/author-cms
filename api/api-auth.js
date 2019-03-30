@@ -18,4 +18,13 @@ router.post('/refresh', [requireAuth], async (req, res) => {
   }
 });
 
+router.get('/user', [requireAuth], async (req, res) => {
+  const user = await UserModel.findById(req.user.id);
+  if(user) {
+    res.json(user.serialize());
+  } else {
+    res.status(404).end();
+  }
+});
+
 module.exports = router;
