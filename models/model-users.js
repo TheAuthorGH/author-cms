@@ -26,7 +26,7 @@ userSchema.methods.validatePassword = async function(password) {
 
 userSchema.methods.createJwt = function() {
   const payload = {
-    user: {id: this._id}
+    id: this._id
   };
   return jwt.sign(payload, config.JWT_SECRET, {
     subject: this.id.toString(),
