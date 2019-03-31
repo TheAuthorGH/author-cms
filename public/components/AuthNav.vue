@@ -1,8 +1,8 @@
 <template>
   <nav class="auth-nav">
     <template v-if="isUserAuthenticated">
-      <span v-if="user">Logged in as {{user.username}}</span>
-      <a @click="logout()"><fa icon="user"/> Logout</a>
+      <span v-if="user"><fa icon="user"/> {{user.username}}</span>
+      <a @click="logout()">Logout</a>
     </template>
   </nav>
 </template>
@@ -29,5 +29,8 @@ export default {
 <style lang="scss">
 .auth-nav {
   display: flex;
+  > * {
+    margin: 0.5rem;
+  }
 }
 </style>

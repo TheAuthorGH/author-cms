@@ -1,5 +1,8 @@
 <template>
-  <div id="app">
+  <div v-if="globalLoading" id="app-loading">
+    <loading/>
+  </div>
+  <div v-else id="app">
     <section role="region">
     </section>
     <section class="centerpiece" role="region">
@@ -20,6 +23,12 @@ import AuthNav from './components/AuthNav';
 export default {
   components: {
     AuthNav
+  },
+  computed: {
+    ...Vuex.mapState(['globalLoading'])
+  },
+  created() {
+    this.$store.dispatch('init');
   }
 };
 </script>
@@ -27,6 +36,16 @@ export default {
 <style lang="scss">
 body {
   height: 100vh;
+}
+
+#app-loading {
+  display: flex;
+  height: 100%;
+
+  > .loading {
+    margin: auto;
+    font-size: 2rem;
+  }
 }
 
 #app {
