@@ -1,9 +1,9 @@
 <template>
   <nav class="auth-nav">
     <template v-if="isUserAuthenticated">
-      <a @click="logout()">Logout</a>
+      <span v-if="user">Logged in as {{user.username}}</span>
+      <a @click="logout()"><fa icon="user"/> Logout</a>
     </template>
-    <router-link v-else to="/login">Login</router-link>
   </nav>
 </template>
 
@@ -12,6 +12,9 @@ export default {
   computed: {
     ...Vuex.mapGetters({
       isUserAuthenticated: 'auth/isUserAuthenticated'
+    }),
+    ...Vuex.mapState({
+      user: state => state.auth.user
     })
   },
   methods: {
