@@ -12,8 +12,8 @@ import router from './router';
 import Vue from 'vue';
 import App from './App';
 
-const requireComponent = require.context('./components/base');
-for(let file of _.reject(requireComponent.keys(), file => _.endsWith(file, '.vue'))) {
+const requireComponent = require.context('./components/base', false, /[^\.vue]$/);
+for(let file of requireComponent.keys()) {
   Vue.component(_.kebabCase(file), requireComponent(file).default);
 }
 
