@@ -19,7 +19,6 @@ router.post('/', [requireAuth, jsonParser], async (req, res) => {
     res.status(201).json(user.serialize());
   } catch(err) {
     res.status(500).end();
-    return;
   }
 });
 

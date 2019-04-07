@@ -6,6 +6,7 @@ module.exports = (app) => {
   const apiRouter = express.Router();
   apiRouter.use('/users', require('./api-users'));
   apiRouter.use('/auth', require('./api-auth'));
+  apiRouter.use('/stories', require('./api-stories'));
 
   app.use('/api', apiRouter);
 
