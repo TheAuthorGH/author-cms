@@ -6,6 +6,14 @@ const passport = require('passport');
 const {Strategy: LocalStrategy} = require('passport-local');
 const expressJwt = require('express-jwt');
 
+const getToken = (req) => {
+  const token = req.headers.authorization;
+  if(token && token.split(' ')[0] === 'Bearer') {
+    return token.split(' ')[1];
+  }
+  return null;
+};
+
 passport.use(new LocalStrategy(
   {usernameField: 'username'},
   async (username, password, callback) => {
@@ -24,12 +32,11 @@ module.exports = {
   localAuth: passport.authenticate('local', {session: false}),
   requireAuth: expressJwt({
     secret: config.JWT_SECRET,
-    getToken(req) {
-      const token = req.headers.authorization;
-      if(token && token.split(' ')[0] === 'Bearer') {
-        return token.split(' ')[1];
-      }
-      return null;
-    }
+    getToken
   }),
+  optionalAuth: expressJwt({
+    secret: config.JWT_SECRET,
+    getToken,
+    credentialsRequired: false
+  })
 };
