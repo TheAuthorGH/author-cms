@@ -20,7 +20,7 @@ router.get('/:slug', [optionalAuth, jsonParser], async (req, res) => {
     res.status(404).end();
     return;
   }
-  res.status(200).json(story.serialize());
+  res.status(200).json(story.serializeWithParts());
 });
 
 router.post('/', [requireAuth, jsonParser], async (req, res) => {
@@ -37,6 +37,21 @@ router.post('/', [requireAuth, jsonParser], async (req, res) => {
   try {
     const story = await StoryModel.create({slug, title});
     res.status(201).json(story.serialize());
+  } catch(err) {
+    res.status(500).end();
+  }
+});
+
+router.put('/parts/:slug', [requireAuth, jsonParser], async (req, res) => {
+  const story = await StoryModel.findOne({slug: req.params.slug});
+  if(!story) {
+    res.status(404).end();
+    return;
+  }
+  story.parts = req.body;
+  try {
+    await story.save();
+    res.status(204).end();
   } catch(err) {
     res.status(500).end();
   }
