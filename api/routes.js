@@ -7,6 +7,7 @@ module.exports = (app) => {
   apiRouter.use('/users', require('./api-users'));
   apiRouter.use('/auth', require('./api-auth'));
   apiRouter.use('/stories', require('./api-stories'));
+  apiRouter.use('/authors', require('./api-authors'));
 
   app.use('/api', apiRouter);
 

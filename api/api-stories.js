@@ -1,5 +1,6 @@
 const StoryModel = require('../models/model-stories');
 
+const mongoose = require('mongoose');
 const _ = require('lodash');
 const jsonParser = require('body-parser').json();
 const {requireAuth, optionalAuth} = require('./auth');
@@ -7,7 +8,7 @@ const {requireAuth, optionalAuth} = require('./auth');
 const router = require('express').Router();
 
 router.get('/', [optionalAuth], async (req, res) => {
-  let stories = await StoryModel.find();
+  let stories = await StoryModel.find().populate('author');
   stories = stories.filter(
     story => 'public' in req.query || !req.user ? story.public : true
   );
@@ -15,7 +16,7 @@ router.get('/', [optionalAuth], async (req, res) => {
 });
 
 router.get('/:slug', [optionalAuth, jsonParser], async (req, res) => {
-  const story = await StoryModel.findOne({slug: req.params.slug});
+  const story = await StoryModel.findOne({slug: req.params.slug}).populate('author');
   if(!story || (!story.public && !req.user)) {
     res.status(404).end();
     return;
@@ -74,6 +75,13 @@ router.patch('/:slug', [requireAuth, jsonParser], async (req, res) => {
     story.public = updates.public;
   if('title' in updates)
     story.title = updates.title;
+  if('author' in updates) {
+    if(!mongoose.Types.ObjectId.isValid(updates.author)) {
+      res.status(400).send('Invalid ID.');
+      return;
+    }
+    story.author = updates.author;
+  }
   
   try {
     await story.save();

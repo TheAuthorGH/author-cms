@@ -16,7 +16,7 @@ userSchema.statics.addUser = async function(user) {
   return new this(user).save();
 };
 
-userSchema.statics.setPassword = async function(password) {
+userSchema.methods.setPassword = async function(password) {
   this.password = await bcrypt.hash(password, config.HASH_SALT);
 };
 
