@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const {ObjectId} = mongoose.Schema.Types;
 
 const partSchema = new mongoose.Schema({
   title: {type: String},
@@ -14,6 +15,7 @@ partSchema.methods.serialize = function() {
 
 const storySchema = new mongoose.Schema({
   slug: {type: String, required: true, unique: true},
+  author: {type: ObjectId, ref: 'Author'},
   title: {type: String, required: true},
   creationDate: {type: Date, default: new Date()},
   public: {type: Boolean, default: false},
@@ -23,6 +25,7 @@ const storySchema = new mongoose.Schema({
 storySchema.methods.serialize = function() {
   return {
     slug: this.slug,
+    author: this.author && this.author.serialize(),
     title: this.title,
     creationDate: this.creationDate,
     public: this.public,
@@ -37,10 +40,6 @@ storySchema.methods.serializeWithParts = function() {
     ...this.serialize(),
     parts: this.parts.map(part => part.serialize())
   };
-};
-
-storySchema.methods.part = function(index) {
-  return this.parts[index] && this.parts[index].serialize();
 };
 
 module.exports = mongoose.model('Story', storySchema);
