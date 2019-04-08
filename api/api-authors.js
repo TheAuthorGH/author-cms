@@ -26,6 +26,9 @@ router.get('/:id', async (req, res) => {
 
 router.post('/', [requireAuth, jsonParser], async (req, res) => {
   const {name} = req.body;
+  if(!name) {
+    res.status(400).send('Missing required fields.');
+  }
   try {
     const author = await AuthorModel.create({name});
     res.status(201).json(author.serialize());
