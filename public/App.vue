@@ -3,14 +3,14 @@
     <loading/>
   </div>
   <div v-else id="app">
-    <section role="region">
+    <section>
     </section>
-    <section class="centerpiece" role="region">
+    <section class="centerpiece">
       <header>
         <h1>AuthorCMS</h1>
         <AuthNav/>
       </header>
-      <main role="main">
+      <main>
         <router-view/>
       </main>
     </section>
@@ -64,6 +64,7 @@ body {
   header {
     display: flex;
     justify-content: space-between;
+    margin-bottom: 1rem;
   }
 
   main {

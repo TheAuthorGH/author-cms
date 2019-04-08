@@ -1,5 +1,5 @@
 <template>
-  <section class="view-error" role="region">
+  <section class="view-error">
     <template v-if="error === '404'">
       <h2>Not Found</h2>
       <p>The resource you requested was not found.</p>
