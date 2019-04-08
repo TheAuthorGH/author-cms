@@ -38,5 +38,9 @@ export default {
   > section {
     flex: 1;
   }
+  > aside {
+    display: flex;
+    flex-direction: column;
+  }
 }
 </style>
