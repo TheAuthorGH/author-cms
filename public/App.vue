@@ -63,20 +63,18 @@ body {
   }
   .centerpiece {
     flex: 1;
-    padding: 1rem;
-  }
-
-  header {
-    display: flex;
-    justify-content: flex-end;
-    margin-bottom: 1rem;
-  }
-
-  main {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 100%;
+    padding: 1rem 2rem;
+    > header {
+      display: flex;
+      justify-content: flex-end;
+      margin-bottom: 1rem;
+    }
+    > main {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100%;
+    }
   }
 }
 </style>
