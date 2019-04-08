@@ -1,5 +1,5 @@
 <template>
-  <nav class="auth-nav">
+  <nav class="app-auth-nav">
     <template v-if="isUserAuthenticated">
       <span v-if="user"><fa icon="user"/> {{user.username}}</span>
       <a @click="logout()">Logout</a>
@@ -27,7 +27,7 @@ export default {
 </script>
 
 <style lang="scss">
-.auth-nav {
+.app-auth-nav {
   display: flex;
   > * {
     margin: 0.5rem;
