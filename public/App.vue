@@ -3,11 +3,11 @@
     <loading/>
   </div>
   <div v-else id="app">
-    <section>
+    <section v-if="isUserAuthenticated">
+      <Sidebar/>
     </section>
     <section class="centerpiece">
       <header>
-        <h1>AuthorCMS</h1>
         <AuthNav/>
       </header>
       <main>
@@ -18,13 +18,18 @@
 </template>
 
 <script>
+import Sidebar from './components/Sidebar';
 import AuthNav from './components/AuthNav';
 
 export default {
   components: {
+    Sidebar,
     AuthNav
   },
   computed: {
+    ...Vuex.mapGetters({
+      isUserAuthenticated: 'auth/isUserAuthenticated'
+    }),
     ...Vuex.mapState(['globalLoading'])
   },
   created() {
@@ -63,7 +68,7 @@ body {
 
   header {
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-end;
     margin-bottom: 1rem;
   }
 

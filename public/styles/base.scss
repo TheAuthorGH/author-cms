@@ -2,10 +2,6 @@ html {
   font-family: 'Source Sans Pro', 'Helvetica Neue', Helvetica, sans-serif, Ubuntu;
 }
 
-h1 {
-  font-size: 2rem;
-}
-
 h2 {
   font-size: 1.5rem;
 }
@@ -27,7 +23,7 @@ form {
   }
   button {
     background-color: #111;
-    color: white;
+    color: #FFF;
     cursor: pointer;
     &:hover {
       background-color: #333;

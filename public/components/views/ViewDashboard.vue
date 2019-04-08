@@ -1,15 +1,7 @@
 <template>
   <section class="view-dashboard">
     <section>
-      <h2>Stories</h2>
-      <loading v-if="!storyIndex"/>
-      <ul v-else>
-        <li
-          v-for="story in storyIndex"
-          :key="story.slug"
-          v-text="story.title"
-        ></li>
-      </ul>
+      <h2>Welcome!</h2>
     </section>
     <aside>
     </aside>
@@ -18,14 +10,7 @@
 
 <script>
 export default {
-  data() {
-    return {
-      storyIndex: null
-    }
-  },
-  async mounted() {
-    this.storyIndex = await this.$store.dispatch('stories/getStoryIndex');
-  }
+
 }
 </script>
 
