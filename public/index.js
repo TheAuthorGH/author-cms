@@ -12,7 +12,7 @@ import router from './router';
 import Vue from 'vue';
 import App from './App';
 
-const requireComponent = require.context('./components/base', false, /[^\.vue]$/);
+const requireComponent = require.context('./components/base', false, /.*(?<!\.vue)$/);
 for(let file of requireComponent.keys()) {
   Vue.component(_.kebabCase(file), requireComponent(file).default);
 }

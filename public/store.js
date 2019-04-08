@@ -4,7 +4,7 @@ window.Vuex = Vuex;
 
 Vue.use(Vuex);
 
-const requireModule = require.context('./stores', false, /[^\.js]$/);
+const requireModule = require.context('./stores', false, /.*(?<!\.js)$/);
 const moduleKeys = requireModule.keys().map(_.kebabCase);
 
 export default new Vuex.Store({
