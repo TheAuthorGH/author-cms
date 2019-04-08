@@ -19,7 +19,6 @@ export default {
 .app-sidebar {
   display: flex;
   flex-direction: column;
-  margin-right: 1rem;
   background-color: #151515;
   height: 100%;
 
