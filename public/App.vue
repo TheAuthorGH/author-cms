@@ -42,7 +42,7 @@ body {
   display: flex;
   height: 100%;
 
-  > .loading {
+  > .b-loading {
     margin: auto;
     font-size: 2rem;
   }
