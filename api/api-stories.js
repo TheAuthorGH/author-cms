@@ -1,6 +1,7 @@
 const StoryModel = require('../models/model-stories');
 
 const mongoose = require('mongoose');
+const {ObjectId} = mongoose.Types;
 const _ = require('lodash');
 const jsonParser = require('body-parser').json();
 const {requireAuth, optionalAuth} = require('./auth');
@@ -8,11 +9,39 @@ const {requireAuth, optionalAuth} = require('./auth');
 const router = require('express').Router();
 
 router.get('/', [optionalAuth], async (req, res) => {
-  let stories = await StoryModel.find().populate('author');
-  stories = stories.filter(
-    story => 'public' in req.query || !req.user ? story.public : true
-  );
-  res.status(200).json(stories.map(story => story.serialize()));
+  const {query} = req;
+  const page = Number(query.page) || 0;
+  const pageSize = Number(query.page_size) || 10;
+
+  const selector = {};
+  if(!req.user) {
+    selector.public = true;
+  } else if(query.public) {
+    selector.public = query.public;
+  }
+  if(query.title) {
+    selector.title = new RegExp(query.title, 'i');
+  }
+  if(query.author) {
+    if(!ObjectId.isValid(query.author)) {
+      res.status(400).send('Invalid ID.');
+      return;
+    }
+    selector.author = query.author;
+  }
+
+  const storyCount = await StoryModel.countDocuments(selector);
+  const stories = await StoryModel
+    .find(selector)
+    .skip(page * pageSize)
+    .limit(pageSize)
+    .populate('author');
+
+  res.status(200).json({
+    pages: Math.ceil(storyCount / pageSize),
+    recordCount: storyCount,
+    records: stories.map(story => story.serialize())
+  });
 });
 
 router.get('/:slug', [optionalAuth, jsonParser], async (req, res) => {
@@ -71,12 +100,14 @@ router.patch('/:slug', [requireAuth, jsonParser], async (req, res) => {
   }
 
   const updates = req.body;
-  if('public' in updates)
+  if('public' in updates) {
     story.public = updates.public;
-  if('title' in updates)
+  }
+  if('title' in updates) {
     story.title = updates.title;
+  }
   if('author' in updates) {
-    if(!mongoose.Types.ObjectId.isValid(updates.author)) {
+    if(!ObjectId.isValid(updates.author)) {
       res.status(400).send('Invalid ID.');
       return;
     }

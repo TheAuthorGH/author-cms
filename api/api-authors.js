@@ -7,8 +7,26 @@ const {requireAuth} = require('./auth');
 const router = require('express').Router();
 
 router.get('/', async (req, res) => {
-  const authors = await AuthorModel.find();
-  res.status(200).json(authors.map(author => author.serialize()));
+  const {query} = req;
+  const page = Number(query.page) || 0;
+  const pageSize = Number(query.page_size) || 10;
+
+  const selector = {};
+  if(query.name) {
+    selector.name = new RegExp(query.name, 'i');
+  }
+
+  const authorCount = await AuthorModel.countDocuments(selector);
+  const authors = await AuthorModel
+    .find(selector)
+    .skip(page * pageSize)
+    .limit(pageSize);
+
+  res.status(200).json({
+    pages: Math.ceil(authorCount / pageSize),
+    recordCount: authorCount,
+    records: authors.map(author => author.serialize())
+  });
 });
 
 router.get('/:id', async (req, res) => {
@@ -49,8 +67,9 @@ router.patch('/:id', [requireAuth, jsonParser], async (req, res) => {
   }
 
   const updates = req.body;
-  if('name' in updates)
+  if('name' in updates) {
     author.name = updates.name;
+  }
   
   try {
     await author.save();
