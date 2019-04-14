@@ -17,7 +17,7 @@ router.get('/', [optionalAuth], async (req, res) => {
   if(!req.user) {
     selector.public = true;
   } else if(query.public) {
-    selector.public = query.public;
+    selector.public = query.public !== 'false';
   }
   if(query.title) {
     selector.title = new RegExp(query.title, 'i');
