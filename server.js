@@ -13,15 +13,27 @@ const app = express();
 
 require('./api/routes')(app);
 
+let server;
+
 async function startServer(port = config.PORT, dbUrl = config.DATABASE_URL) {
   await mongoose.connect(`mongodb://${dbUrl}`);
   return await new Promise((resolve, reject) =>
-    app
+    server = app
       .listen(port, resolve)
       .on('error', err => {
         mongoose.disconnect();
         reject(err);
       })
+  );
+}
+
+async function stopServer() {
+  await mongoose.disconnect();
+  return await new Promise((resolve, reject) =>
+    server.close(err => {
+      if(err) return reject(err);
+      resolve();
+    })
   );
 }
 
@@ -35,7 +47,6 @@ async function main() {
   }
 }
 
-if(require.main === module)
-  main();
+if(require.main === module) main();
 
-module.exports = {app, startServer, main};
+module.exports = {app, startServer, stopServer, main};
