@@ -13,14 +13,15 @@ const credentials = {
 };
 
 describe('API - Auth - api/auth/', function() {
+  let user;
+  let jwt;
+
   before(async function() {
     await startServer(config.PORT, config.TEST_DATABASE_URL);
     await util.seedDatabase();
-    await UserModel.addUser(credentials);
+    user = await UserModel.addUser(credentials);
   });
   after(stopServer);
-
-  let jwt;
 
   it('Should reject an invalid login', async function() {
     const res = await chai.request(app)
@@ -42,5 +43,15 @@ describe('API - Auth - api/auth/', function() {
       .set('Authorization', `Bearer ${jwt}`);
     expect(res).to.have.status(200);
     expect(res.body).to.be.a('string');
+  });
+  it('Should provide info about current user', async function() {
+    const res = await chai.request(app)
+      .get('/api/auth/user')
+      .set('Authorization', `Bearer ${jwt}`);
+    expect(res).to.have.status(200);
+    expect(res).to.be.json;
+    expect(res.body).to.include.keys(['id', 'username']);
+    expect(res.body.id).to.equal(user._id.toString());
+    expect(res.body.username).to.equal(user.username);
   });
 });
