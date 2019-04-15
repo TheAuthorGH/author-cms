@@ -1,6 +1,7 @@
 const chai = require('chai');
 const {expect} = chai;
 chai.use(require('chai-http'));
+const jwt = require('jsonwebtoken');
 const UserModel = require('../models/model-users');
 const util = require('./util');
 const config = require('../config');
@@ -14,7 +15,7 @@ const credentials = {
 
 describe('API - Auth - api/auth/', function() {
   let user;
-  let jwt;
+  let token;
 
   before(async function() {
     await startServer(config.PORT, config.TEST_DATABASE_URL);
@@ -35,19 +36,26 @@ describe('API - Auth - api/auth/', function() {
       .send(credentials);
     expect(res).to.have.status(200);
     expect(res.body).to.be.a('string');
-    jwt = res.body;
+    token = res.body;
+    const payload = jwt.verify(token, config.JWT_SECRET);
+    expect(payload).to.have.keys(['id', 'iat', 'exp', 'sub']);
+    expect(payload.id).to.equal(user._id.toString());
   });
   it('Should allow refreshing a valid JWT', async function() {
     const res = await chai.request(app)
       .post('/api/auth/refresh')
-      .set('Authorization', `Bearer ${jwt}`);
+      .set('Authorization', `Bearer ${token}`);
     expect(res).to.have.status(200);
     expect(res.body).to.be.a('string');
+    token = res.body;
+    const payload = jwt.verify(token, config.JWT_SECRET);
+    expect(payload).to.have.keys(['id', 'iat', 'exp', 'sub']);
+    expect(payload.id).to.equal(user._id.toString());
   });
   it('Should provide info about current user', async function() {
     const res = await chai.request(app)
       .get('/api/auth/user')
-      .set('Authorization', `Bearer ${jwt}`);
+      .set('Authorization', `Bearer ${token}`);
     expect(res).to.have.status(200);
     expect(res).to.be.json;
     expect(res.body).to.include.keys(['id', 'username']);
