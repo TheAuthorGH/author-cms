@@ -15,13 +15,13 @@ describe('API - Auth - api/auth/', function() {
   
   let jwt;
 
-  it('It should reject an invalid login', async function() {
+  it('Should reject an invalid login', async function() {
     const res = await chai.request(app)
       .post('/api/auth')
       .send({...validLogin, password: validLogin.password + 'a'});
     expect(res).to.have.status(401);
   });
-  it('It should provide a JWT ', async function() {
+  it('Should provide a JWT on valid login', async function() {
     const res = await chai.request(app)
       .post('/api/auth')
       .send(validLogin);
@@ -29,7 +29,7 @@ describe('API - Auth - api/auth/', function() {
     expect(res.body).to.be.a('string');
     jwt = res.body;
   });
-  it('It should provide a refreshed JWT on /refresh', async function() {
+  it('Should allow refreshing a valid JWT', async function() {
     const res = await chai.request(app)
       .post('/api/auth/refresh')
       .set('Authorization', `Bearer ${jwt}`);
