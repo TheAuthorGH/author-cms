@@ -1,10 +1,10 @@
 const chai = require('chai');
 const {expect} = chai;
 chai.use(require('chai-http'));
-const jwt = require('jsonwebtoken');
-const UserModel = require('../models/model-users');
 const util = require('./util');
 const config = require('../config');
+const jwt = require('jsonwebtoken');
+const UserModel = require('../models/model-users');
 
 const {app, startServer, stopServer} = require('../server');
 
@@ -13,7 +13,7 @@ const credentials = {
   password: 'admin'
 };
 
-describe('API - Auth - api/auth/', function() {
+describe('API - Auth [/api/auth]', function() {
   let user;
   let token;
 
@@ -24,13 +24,13 @@ describe('API - Auth - api/auth/', function() {
   });
   after(stopServer);
 
-  it('Should reject an invalid login', async function() {
+  it('Should reject an invalid login [/api/auth]', async function() {
     const res = await chai.request(app)
       .post('/api/auth')
       .send({...credentials, password: credentials.password + 'a'});
     expect(res).to.have.status(401);
   });
-  it('Should provide a JWT on valid login', async function() {
+  it('Should provide a JWT on valid login [/api/auth]', async function() {
     const res = await chai.request(app)
       .post('/api/auth')
       .send(credentials);
@@ -41,7 +41,7 @@ describe('API - Auth - api/auth/', function() {
     expect(payload).to.have.keys(['id', 'iat', 'exp', 'sub']);
     expect(payload.id).to.equal(user._id.toString());
   });
-  it('Should allow refreshing a valid JWT', async function() {
+  it('Should allow refreshing a valid JWT [/api/auth/refresh]', async function() {
     const res = await chai.request(app)
       .post('/api/auth/refresh')
       .set('Authorization', `Bearer ${token}`);
@@ -52,7 +52,7 @@ describe('API - Auth - api/auth/', function() {
     expect(payload).to.have.keys(['id', 'iat', 'exp', 'sub']);
     expect(payload.id).to.equal(user._id.toString());
   });
-  it('Should provide info about current user', async function() {
+  it('Should provide info about current user [/api/auth/user]', async function() {
     const res = await chai.request(app)
       .get('/api/auth/user')
       .set('Authorization', `Bearer ${token}`);
