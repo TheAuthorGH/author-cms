@@ -87,11 +87,6 @@ router.put('/parts/:slug', [requireAuth, jsonParser], async (req, res) => {
   }
 });
 
-router.delete('/:slug', [requireAuth], async (req, res) => {
-  await StoryModel.findOneAndDelete({slug: req.params.slug});
-  res.status(204).end();
-});
-
 router.patch('/:slug', [requireAuth, jsonParser], async (req, res) => {
   const story = await StoryModel.findOne({slug: req.params.slug});
   if(!story) {
@@ -120,6 +115,11 @@ router.patch('/:slug', [requireAuth, jsonParser], async (req, res) => {
   } catch(err) {
     res.status(500).end();
   }
+});
+
+router.delete('/:slug', [requireAuth], async (req, res) => {
+  await StoryModel.findOneAndDelete({slug: req.params.slug});
+  res.status(204).end();
 });
 
 module.exports = router;
