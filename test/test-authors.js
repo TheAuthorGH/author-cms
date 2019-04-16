@@ -18,7 +18,7 @@ describe('API - Authors [/api/authors]', async function() {
     const res = await chai.request(app).get('/api/authors');
     expect(res).to.have.status(200);
     expect(res).to.be.json;
-    
+    expect(res.body).to.include.keys(['pages', 'recordCount', 'records']);
   });
   it('Should return a complete Author record for a given id [/api/authors/:id]', async function() {
     const author = await AuthorModel.findOne();
