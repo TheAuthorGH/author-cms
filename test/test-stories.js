@@ -14,13 +14,13 @@ describe('API - Stories [/api/stories]', function() {
   });
   after(stopServer);
 
-  it('Should return an index of stories [GET /api/stories/]', async function() {
+  it('Should provide an index of stories [GET /api/stories/]', async function() {
     const res = await chai.request(app).get('/api/stories');
     expect(res).to.have.status(200);
     expect(res).to.be.json;
     expect(res.body).to.include.keys(['pages', 'recordCount', 'records']);
   });
-  it('Should return a complete Story record for a given slug [GET /api/stories/:slug]', async function() {
+  it('Should provide a complete Story record for a given slug [GET /api/stories/:slug]', async function() {
     const story = await StoryModel.findOne();
     const res = await chai.request(app).get(`/api/stories/${story.slug}`);
     expect(res).to.have.status(200);
