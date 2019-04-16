@@ -24,13 +24,13 @@ describe('API - Auth [/api/auth]', function() {
   });
   after(stopServer);
 
-  it('Should reject an invalid login [/api/auth]', async function() {
+  it('Should reject an invalid login [POST /api/auth]', async function() {
     const res = await chai.request(app)
       .post('/api/auth')
       .send({...credentials, password: credentials.password + 'a'});
     expect(res).to.have.status(401);
   });
-  it('Should provide a JWT on valid login [/api/auth]', async function() {
+  it('Should provide a JWT on valid login [POST /api/auth]', async function() {
     const res = await chai.request(app)
       .post('/api/auth')
       .send(credentials);
@@ -41,7 +41,7 @@ describe('API - Auth [/api/auth]', function() {
     expect(payload).to.have.keys(['id', 'iat', 'exp', 'sub']);
     expect(payload.id).to.equal(user._id.toString());
   });
-  it('Should allow refreshing a valid JWT [/api/auth/refresh]', async function() {
+  it('Should allow refreshing a valid JWT [POST /api/auth/refresh]', async function() {
     const res = await chai.request(app)
       .post('/api/auth/refresh')
       .set('Authorization', `Bearer ${token}`);
@@ -52,7 +52,7 @@ describe('API - Auth [/api/auth]', function() {
     expect(payload).to.have.keys(['id', 'iat', 'exp', 'sub']);
     expect(payload.id).to.equal(user._id.toString());
   });
-  it('Should provide info about current user [/api/auth/user]', async function() {
+  it('Should provide info about current user [GET/api/auth/user]', async function() {
     const res = await chai.request(app)
       .get('/api/auth/user')
       .set('Authorization', `Bearer ${token}`);
