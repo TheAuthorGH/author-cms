@@ -20,7 +20,7 @@ describe('API - Auth', function() {
   before(async function() {
     await startServer(config.PORT, config.TEST_DATABASE_URL);
     await util.seedDatabase();
-    user = await UserModel.addUser(credentials);
+    user = await UserModel.findOne({username: 'admin'});
   });
   after(stopServer);
 
