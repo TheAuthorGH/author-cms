@@ -73,7 +73,7 @@ router.patch('/:id', [requireAuth, jsonParser], async (req, res) => {
   
   try {
     await author.save();
-    res.status(201).end();
+    res.status(204).end();
   } catch(err) {
     res.status(500).end();
   }

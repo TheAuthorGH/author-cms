@@ -116,7 +116,7 @@ router.patch('/:slug', [requireAuth, jsonParser], async (req, res) => {
   
   try {
     await story.save();
-    res.status(201).end();
+    res.status(204).end();
   } catch(err) {
     res.status(500).end();
   }
