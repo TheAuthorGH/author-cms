@@ -1,5 +1,4 @@
 const mongoose = require('mongoose');
-const chai = require('chai');
 
 module.exports = {
   async seedDatabase(fixtures = {}) {
