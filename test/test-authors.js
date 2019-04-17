@@ -12,7 +12,9 @@ describe('API - Authors', function() {
 
   before(async function() {
     await startServer(config.PORT, config.TEST_DATABASE_URL);
-    await util.seedDatabase(require('./fixtures/fixtures-authors'));
+    await util.seedDatabase({
+      models: [{key: 'Author'}]
+    });
     authHeader = await util.getAuthToken();
   });
   after(stopServer);

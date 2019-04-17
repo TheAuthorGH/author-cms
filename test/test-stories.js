@@ -10,7 +10,9 @@ const {app, startServer, stopServer} = require('../server');
 describe('API - Stories', function() {
   before(async function() {
     await startServer(config.PORT, config.TEST_DATABASE_URL);
-    await util.seedDatabase(require('./fixtures/fixtures-stories'));
+    await util.seedDatabase({
+      models: [{key: 'Story'}]
+    });
   });
   after(stopServer);
 
