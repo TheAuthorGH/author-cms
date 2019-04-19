@@ -2,6 +2,7 @@ const chai = require('chai');
 const {expect} = chai;
 chai.use(require('chai-http'));
 const util = require('./util');
+const generators = require('./generators');
 const config = require('../config');
 const AuthorModel = require('../models/model-authors');
 
@@ -41,7 +42,7 @@ describe('API - Authors', function() {
 
   describe('POST /api/authors', function() {
     it('Should allow creating a new Author record', async function() {
-      const newAuthor = {name: 'Lorem Ipsum'};
+      const newAuthor = generators.Author();
       const res = await chai.request(app)
         .post('/api/authors')
         .set(authHeader)

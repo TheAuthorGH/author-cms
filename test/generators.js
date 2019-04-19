@@ -6,7 +6,11 @@ module.exports = {
     return {
       slug: `story-${_.uniqueId()}`,
       title: faker.random.words(),
-      public: index % 2 === 0
+      public: index % 2 === 0,
+      parts: _.times(10, i => ({
+        title: faker.random.words(),
+        content: faker.lorem.paragraph()
+      }))
     };
   },
   Author() {
