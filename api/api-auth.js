@@ -6,13 +6,13 @@ const UserModel = require('../models/model-users');
 const router = require('express').Router();
 
 router.post('/', [jsonParser, localAuth], (req, res) => {
-  res.json(req.user.createJwt());
+  res.status(200).json(req.user.createJwt());
 });
 
 router.post('/refresh', [requireAuth], async (req, res) => {
   const user = await UserModel.findById(req.user.id);
   if(user) {
-    res.json(user.createJwt());
+    res.status(200).json(user.createJwt());
   } else {
     res.status(401).end();
   }
@@ -21,7 +21,7 @@ router.post('/refresh', [requireAuth], async (req, res) => {
 router.get('/user', [requireAuth], async (req, res) => {
   const user = await UserModel.findById(req.user.id);
   if(user) {
-    res.json(user.serialize());
+    res.status(200).json(user.serialize());
   } else {
     res.status(404).end();
   }
