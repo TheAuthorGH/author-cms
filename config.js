@@ -5,5 +5,7 @@ module.exports = {
   
   JWT_SECRET: process.env.JWT_SECRET || 'jwtsecret',
   JWT_EXPIRY: process.env.JWT_EXPIRY || '1d',
-  HASH_SALT: 10
+  HASH_SALT: 10,
+
+  ROUTE_API: '/api'
 };

@@ -1,5 +1,7 @@
 const express = require('express');
 
+const config = require('../config');
+
 module.exports = (app) => {
   app.use(express.static('public'));
 
@@ -9,7 +11,7 @@ module.exports = (app) => {
   apiRouter.use('/stories', require('./api-stories'));
   apiRouter.use('/authors', require('./api-authors'));
 
-  app.use('/api', apiRouter);
+  app.use(config.ROUTE_API, apiRouter);
 
   app.use((err, req, res, next) => {
     if(err.name === 'UnauthorizedError') {
