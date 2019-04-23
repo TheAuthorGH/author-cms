@@ -22,8 +22,4 @@ router.post('/', [requireAuth, jsonParser], async (req, res) => {
   }
 });
 
-router.get('/', async (req, res) => {
-  res.status(501).end();
-});
-
 module.exports = router;
