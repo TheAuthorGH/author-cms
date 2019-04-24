@@ -2,6 +2,12 @@ const _ = require('lodash');
 const faker = require('faker');
 
 module.exports = {
+  User() {
+    return {
+      username: `user-${_.uniqueId()}`,
+      password: faker.random.word()
+    };
+  },
   Story(index) {
     return {
       slug: `story-${_.uniqueId()}`,
