@@ -4,13 +4,13 @@ const faker = require('faker');
 module.exports = {
   User() {
     return {
-      username: `user-${_.uniqueId()}`,
+      username: _.uniqueId('user'),
       password: faker.random.word()
     };
   },
   Story(index) {
     return {
-      slug: `story-${_.uniqueId()}`,
+      slug: _.uniqueId('story'),
       title: faker.random.words(),
       public: index % 2 === 0,
       parts: _.times(10, i => ({
