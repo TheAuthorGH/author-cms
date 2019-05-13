@@ -35,7 +35,7 @@ describe('API - Stories', function() {
       const res = await chai.request(app).get(`/api/stories/${story.slug}`);
       expect(res).to.have.status(200);
       expect(res).to.be.json;
-      expect(res.body).to.include.keys(['title', 'slug', 'creationDate', 'public', 'parts']);
+      expect(res.body).to.include.keys(['slug', 'title', 'parts']);
       expect(res.body.slug).to.equal(story.slug);
     });
   });
@@ -49,7 +49,7 @@ describe('API - Stories', function() {
         .send(newStory);
       expect(res).to.have.status(201);
       expect(res).to.be.json;
-      expect(res.body).to.include.keys(['slug', 'creationDate']);
+      expect(res.body).to.include.keys(['slug', 'title']);
       const story = await StoryModel.findOne({slug: res.body.slug});
       expect(story).to.not.be.null;
     });

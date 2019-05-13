@@ -50,7 +50,10 @@ router.get('/:slug', [optionalAuth, jsonParser], async (req, res) => {
     res.status(404).end();
     return;
   }
-  res.status(200).json(story.serializeWithParts());
+  res.status(200).json(story.serialize({
+    parts: true,
+    cmsMeta: req.user
+  }));
 });
 
 router.post('/', [requireAuth, jsonParser], async (req, res) => {
@@ -95,7 +98,7 @@ router.patch('/:slug', [requireAuth, jsonParser], async (req, res) => {
   }
 
   const updates = req.body;
-  if('public' in updates) {
+  if('public' in updates) { // TODO rename this
     story.public = updates.public;
   }
   if('title' in updates) {
